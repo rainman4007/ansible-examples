@@ -1,0 +1,12 @@
+--- # web playbook
+- hosts: centos
+  user: ansible
+  sudo: yes
+  connection: ssh
+  vars_files: 
+  - variables/vars.yaml
+  tasks:
+  - include: packages/package.yaml
+  - include: commands/commands.yaml
+  handlers:
+  - include: handlers/handlers.yaml

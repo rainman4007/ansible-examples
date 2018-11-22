@@ -1,0 +1,19 @@
+--- # notification and handling events
+- hosts: centos
+  remote_user: ansible
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  connection: ssh
+  tasks: 
+  - name: install nginx web server
+    yum:
+     name: nginx
+     state: latest
+    notify: 
+  - name: start nginx service
+    service: 
+      name: nginx
+      enabled: yes
+      state: restarted
+

@@ -1,0 +1,5 @@
+- name: installing nginx
+  yum: pkg=nginx state=latest
+  notify: restart nginx
+- name: installing lynx cli webbrowser
+  yum: pkg=lynx state=latest

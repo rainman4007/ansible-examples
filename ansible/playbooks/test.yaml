@@ -1,0 +1,39 @@
+--- # To install httpd on centos
+- hosts: '{{ myhosts }}'  # this is to use a variable under variables section of this yaml file
+  remote_user: ansible
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  vars:
+    myhosts: centos
+  tasks:
+  - name: install nginx and restart the service
+    yum:
+     name: nginx
+     state: latest
+    register: result
+  - debug: var=result
+    notify:
+     - nginxservice
+     #download_only: true
+  - name: install httpd on centos and notify service to start
+    yum:
+     name: httpd
+     state: latest
+    register: result
+  - debug: var=result
+    notify:
+    - startservice  # notifies the handler's startservice and runs what is defined under it
+  handlers:
+  - name: startservice
+    service:
+     name: httpd
+     state: restarted
+  - name: nginxservice
+    service:
+     name: nginx
+     enabled: yes
+     state: restarted
+   
+  
