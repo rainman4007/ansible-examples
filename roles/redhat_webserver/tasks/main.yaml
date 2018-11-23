@@ -1,0 +1,20 @@
+- name: install apache
+  yum: pkg={{ redhat_apache }} state=latest
+  when: "ansible_os_family == 'RedHat'"
+  ignore_errors: yes
+- shell: "systemctl status httpd"
+  register: result ## capture the above result in this variable
+  until: result.stdout.find("active (running)") != -1  ## keeps on running the loop until it receives the result 
+  retries: 5
+  delay: 5
+- debug: var=result
+- name: wait for service to start listening on port 80
+  wait_for:
+    port: 80
+    state: started
+- name: install list of software
+  yum: pkg={{ item }} state=latest
+  with_items:
+  - telnet
+  - lynx
+  tags: install_list

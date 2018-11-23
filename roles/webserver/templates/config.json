@@ -1,0 +1,11 @@
+{
+    "count": 3,
+    "git": {
+            "searchPaths": "{application}",
+            "uri": "https://{{pcf_org | replace('_', '') }}-{{pcf_space | replace('_', '') }}-git-svc.{{pcf_app_domain}}/scsconfig/configuration.git",
+            "cloneOnStart": "true",
+            "username": "scsconfig",
+            "password": "adsf1324",
+            "label": "{{giteaBranch}}"
+      }
+}

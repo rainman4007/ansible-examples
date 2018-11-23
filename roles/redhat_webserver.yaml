@@ -1,0 +1,13 @@
+--- ## master playbook for webserver
+- hosts: centos
+  user: ansible
+  sudo: yes
+  connection: ssh
+  pre_tasks:
+  - name: role start
+    raw: date > /home/ansible/startrole.log
+  roles:
+  - { role: readhat_webserver, when: "ansible_os_family == 'RedHat'" }
+  post_tasks:
+  - name: role end
+    raw: date > /home/ansible/endrole.log

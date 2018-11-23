@@ -1,0 +1,20 @@
+--- # testing error-handling
+- hosts: centos
+  connection: ssh
+  user: ansible
+  sudo: yes
+  gather_facts: no
+  tasks:
+   - name: Attempt and graceful roll back demo
+     block:
+       - debug:
+           msg: 'I execute normally'
+         notify: run me even after an error
+       - command: /bin/false
+     rescue:
+       - name: make sure all handlers run
+         meta: flush_handlers
+  handlers:
+    - name: run me even after an error
+      debug:
+        msg: 'This handler runs even on error'

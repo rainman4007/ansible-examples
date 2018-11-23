@@ -1,0 +1,17 @@
+- name: install apache
+  yum: pkg={{ redhat_apache }} state=latest
+  when: "ansible_os_family == 'RedHat'"
+  ignore_errors: yes
+  notify: restart httpd
+- name: install apache2 on ubuntu
+  apt: pkg={{ debian_apache }} state=latest
+  when: "ansible_os_family == 'Debian'"
+  ignore_errors: yes
+  notify: restart apache2 
+- name: template config file
+  template:
+    src:  files/templates/cloud-config-template-config.json
+    dest: ./config.json
+##- debug: need to install telnet
+##  when: "ansible_os_family == 'RedHat'"
+###  notify: installTelnet
