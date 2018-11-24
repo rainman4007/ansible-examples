@@ -1,3 +1,7 @@
+- name: testing custom_module
+  custom_module:
+  register: custom_var
+- debug: var=custom_var
 - name: install apache
   yum: pkg={{ redhat_apache }} state=latest
   when: "ansible_os_family == 'RedHat'"
